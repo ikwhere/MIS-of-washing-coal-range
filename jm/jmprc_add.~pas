@@ -1,0 +1,91 @@
+unit jmprc_add;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, MotherForm_add, DB, ADODB, StdCtrls, Buttons, ExtCtrls, ComCtrls;
+
+type
+  TFrmJmPrcadd = class(TFrmAdd)
+    Label1: TLabel;
+    ComboName: TComboBox;
+    Label2: TLabel;
+    Label3: TLabel;
+    ComboCustom: TComboBox;
+    Label4: TLabel;
+    EdtPrc: TEdit;
+    Label5: TLabel;
+    EdtPrctax: TEdit;
+    Label6: TLabel;
+    Edttpprc: TEdit;
+    Label7: TLabel;
+    Edttpprctax: TEdit;
+    ComboMonth: TComboBox;
+    procedure EdtPrcKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmJmPrcadd: TFrmJmPrcadd;
+
+implementation
+
+uses jmprc,Main;
+
+{$R *.dfm}
+
+procedure TFrmJmPrcadd.EdtPrcKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+    if not(key in ['1','2','3','4','5','6','7','8','9','0','.',#30]) then
+    abort;
+end;
+
+procedure TFrmJmPrcadd.BitBtn1Click(Sender: TObject);
+var sqlstr:string;
+begin
+  inherited;
+  IF (CheckAllNull()=False) THEN begin
+    MessageBox(Handle, '×ÊÁÏÎ´ÌîÐ´È«,Çë¼ì²é!', '´íÎó', MB_ICONERROR or MB_OK) ;
+    ABORT
+  END;
+  IF trim(EdtPrc.Text)='' THEN  EdtPrc.Text:='0';
+  IF trim(EdtPrctax.Text)='' THEN  EdtPrctax.Text:='0';
+
+  IF trim(Edttpprc.Text)='' THEN  Edttpprc.Text:='0';
+  IF trim(Edttpprctax.Text)='' THEN  Edttpprctax.Text:='0';
+  if FrmJmprc.laction='ADD' then begin
+            sqlstr:='insert into jmprc (jmprcno,jmprcdate,jmprcname,jmprcustom,jmprc,jmprctax,jmtpprc,jmtpprctax,keydate,keyuser) values ('+
+                                  Labelno.Caption+','+
+                                  #39+ComboMonth.Text+#39+','+
+                                  #39+trim(ComboName.Text)+#39+','+
+                                  #39+trim(ComboCustom.Text)+#39+','+
+                                  trim(EdtPrc.Text)+','+
+                                  trim(EdtPrctax.Text)+','+
+                                  trim(Edttpprc.Text)+','+
+                                  trim(Edttpprctax.Text)+','+
+                                  #39+trim(datetostr(date()))+#39+','+
+                                  #39+curuser.Name+#39+')';
+  end
+  else if  FrmJmprc.laction='MODIFY' then begin
+           sqlstr:='update jmprc set jmprcdate='+#39+ComboMonth.Text+#39+','+
+                                  'jmprcname='+#39+trim(ComboName.Text)+#39+','+
+                                  'jmprcustom='+#39+trim(ComboCustom.Text)+#39+','+
+                                  'jmprc='+trim(EdtPrc.Text)+','+
+                                  'jmprctax='+trim(EdtPrctax.Text)+','+
+                                  'jmtpprc='+trim(Edttpprc.Text)+','+
+                                  'jmtpprctax='+trim(Edttpprctax.Text)+','+
+                                  'keydate='+#39+trim(datetostr(date()))+#39+','+
+                                  'keyuser='+#39+curuser.Name+#39+
+                                  ' where jmprcno='+Labelno.Caption;
+  end;
+  adoqryexec(ADOQtmp,sqlstr);
+  self.Close;
+end;
+
+end.

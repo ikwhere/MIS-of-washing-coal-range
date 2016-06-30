@@ -1,0 +1,169 @@
+inherited Frmjsqx: TFrmjsqx
+  Left = 328
+  Top = 133
+  Caption = #35282#33394#26435#38480#35774#32622
+  FormStyle = fsMDIChild
+  OldCreateOrder = True
+  Visible = True
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Splitter1: TSplitter [0]
+    Left = 137
+    Top = 49
+    Width = 9
+    Height = 335
+    Cursor = crHSplit
+  end
+  inherited Panel2: TPanel
+    inherited Button1: TButton
+      Left = 168
+      Caption = #26032#22686#35282#33394
+    end
+    inherited Button2: TButton
+      Left = 264
+      Caption = #20462#25913#26435#38480
+    end
+    inherited Button3: TButton
+      Left = 360
+      Caption = #21024#38500#35282#33394
+    end
+    inherited Button4: TButton
+      Left = 584
+    end
+    object Button5: TButton [4]
+      Left = 16
+      Top = 15
+      Width = 97
+      Height = 33
+      Caption = #22797#21046#26435#38480
+      TabOrder = 4
+      Visible = False
+    end
+    inherited Button6: TButton
+      Left = 456
+      Top = 15
+      TabOrder = 5
+      Visible = True
+    end
+  end
+  object GroupBox1: TGroupBox [2]
+    Left = 0
+    Top = 49
+    Width = 137
+    Height = 335
+    Align = alLeft
+    Caption = #35282#33394#21015#34920
+    TabOrder = 1
+    object ListBox1: TListBox
+      Left = 2
+      Top = 15
+      Width = 133
+      Height = 318
+      Align = alClient
+      ItemHeight = 13
+      TabOrder = 0
+      OnClick = ListBox1Click
+    end
+  end
+  inherited dxDBGrid1: TdxDBGrid
+    Left = 146
+    Top = 49
+    Width = 542
+    Height = 335
+    KeyField = 'qxno'
+    ShowGroupPanel = True
+    Align = alClient
+    TabOrder = 3
+    Filter.Criteria = {00000000}
+    OptionsDB = [edgoCanAppend, edgoCancelOnExit, edgoCanDelete, edgoCanInsert, edgoCanNavigation, edgoConfirmDelete, edgoSmartRefresh, edgoSmartReload, edgoUseBookmarks]
+    object dxDBGrid1Column1: TdxDBGridColumn
+      Caption = #21151#33021#31867#21035
+      Sorted = csUp
+      Visible = False
+      Width = 69
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'parentnode'
+      GroupIndex = 0
+    end
+    object dxDBGrid1Column2: TdxDBGridColumn
+      Caption = #21151#33021#27169#22359
+      ReadOnly = True
+      Width = 149
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'childnode'
+    end
+    object dxDBGrid1Column3: TdxDBGridColumn
+      Caption = #35282#33394
+      Visible = False
+      Width = 71
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'usergroup'
+    end
+    object dxDBGrid1Column4: TdxDBGridCheckColumn
+      Caption = #26597#30475#26435#38480
+      Width = 71
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'qxread'
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object dxDBGrid1Column7: TdxDBGridCheckColumn
+      Caption = #26032#22686#26435#38480
+      MinWidth = 20
+      Width = 71
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'qxadd'
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object dxDBGrid1Column5: TdxDBGridCheckColumn
+      Caption = #20462#25913#26435#38480
+      Width = 71
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'qxwrite'
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object dxDBGrid1Column6: TdxDBGridCheckColumn
+      Caption = #21024#38500#26435#38480
+      Width = 71
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'qxdelete'
+      ValueChecked = 'True'
+      ValueUnchecked = 'False'
+    end
+    object dxDBGrid1Column8: TdxDBGridColumn
+      Caption = #33258#21160#32534#21495
+      Visible = False
+      Width = 69
+      BandIndex = 0
+      RowIndex = 0
+      FieldName = 'qxno'
+    end
+  end
+  inherited Panel1: TPanel
+    inherited Label3: TLabel
+      Visible = False
+    end
+    inherited DatePicker1: TDateTimePicker
+      Visible = False
+    end
+    inherited DatePicker2: TDateTimePicker
+      Visible = False
+    end
+    inherited Button8: TButton
+      Visible = False
+    end
+  end
+  inherited DataSource1: TDataSource
+    Left = 488
+  end
+end

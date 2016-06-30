@@ -1,0 +1,192 @@
+unit MotherForm;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, ComCtrls,adodb, DB, dxExEdtr, dxCntner, dxTL,
+  dxDBCtrl, dxDBGrid, ExtCtrls, StdCtrls,dbconn;
+
+type
+  TFrmMather = class(TForm)
+    ADOQtmp: TADOQuery;
+    DataSource1: TDataSource;
+    Panel2: TPanel;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    dxDBGrid1: TdxDBGrid;
+    Panel1: TPanel;
+    Button6: TButton;
+    ADOQuery1: TADOQuery;
+    Label3: TLabel;
+    DatePicker1: TDateTimePicker;
+    DatePicker2: TDateTimePicker;
+    Button8: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure dxDBGrid1Exit(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     laction:string;     //局部动作变量  ADD MODIFY  DEL
+     g_date:string;
+     g_time:string;
+   function adoqryopen(adoquery1:Tadoquery;sqlstr:string):boolean;
+   function adoqryexec(adoquery1:Tadoquery;sqlstr:string):boolean;
+   function initdb():boolean;
+   function getmax(Ptabel,Pcolumn:string):string;overload;
+   function getmax(Ptabel,Pcolumn,addition:string):string;overload;
+   function savelog(logcntet,logvalue,logproname:string):boolean;
+   function g_init:boolean;
+  end;
+
+var
+  FrmMather: TFrmMather;
+
+  
+implementation
+
+uses MAIN;
+
+{$R *.dfm}
+function TFrmMather.g_init:boolean;
+var tmpado:Tadoquery;
+    sqlstr:string;
+begin
+//获取服务器时间
+   tmpado:=Tadoquery.Create(nil);
+   sqlstr:='select getdate() as serverDate';
+   adoqryopen(tmpado,sqlstr);
+   g_date:=tmpado.fieldbyname('serverDate').asstring;
+   tmpado.Free;
+end;
+function TFrmMather.getmax(Ptabel,Pcolumn,addition:string):string;
+var sqlstr:string;
+var tmpado:Tadoquery;
+begin
+   tmpado:=Tadoquery.Create(nil);
+   sqlstr:='select '+Pcolumn+' from '+Ptabel+' where '+addition+' order by '+Pcolumn+' desc';
+   adoqryopen(tmpado,sqlstr);
+   result:=inttostr(tmpado.Fields[0].asinteger+1);
+   tmpado.Free;
+end;
+function TFrmMather.getmax(Ptabel,Pcolumn:string):string;
+var sqlstr:string;
+var tmpado:Tadoquery;
+begin
+   tmpado:=Tadoquery.Create(nil);
+   sqlstr:='select '+Pcolumn+' from '+Ptabel+' order by '+Pcolumn+' desc';
+   adoqryopen(tmpado,sqlstr);
+   result:=inttostr(tmpado.Fields[0].asinteger+1);
+   tmpado.Free;
+end;
+
+function TFrmMather.adoqryopen(adoquery1:Tadoquery;sqlstr:string):boolean;
+begin
+    adoquery1.Connection:=DataModule1.ADOConnection1;
+    adoquery1.SQL.Text:=sqlstr;
+    adoquery1.Open;
+end;
+function TFrmMather.adoqryexec(adoquery1:Tadoquery;sqlstr:string):boolean;
+begin
+    adoquery1.Connection:=DataModule1.ADOConnection1;
+    adoquery1.SQL.Text:=sqlstr;
+    adoquery1.ExecSQL;
+end;
+function TFrmMather.initdb():boolean;
+begin
+    DataModule1.ADOConnection1.ConnectionString:='Provider=SQLOLEDB.1;Persist Security Info=False;User ID=sa;Initial Catalog=xmxt;Data Source=WY-D071E5AA86D5';
+    DataModule1.ADOConnection1.LoginPrompt:=false;
+end;
+procedure TFrmMather.Button1Click(Sender: TObject);
+begin
+  IF NOT FrmMain.N6.Enabled THEN BEGIN
+    //MessageDlg('您无此权限,请联系管理员!',mtError,[mbOK],0);
+    MessageBox(Handle, '您无此权限,请联系管理员!', '提示', MB_ICONERROR or MB_OK) ;
+    ABORT
+  END;
+ // (Sender as Tbutton).Enabled:=NOT (Sender as Tbutton).Enabled;
+ // dxDBGrid1.OptionsBehavior:=dxDBGrid1.OptionsBehavior+[edgoEditing];
+  Button6.Enabled:=TRUE;
+  laction:='ADD';
+end;
+
+procedure TFrmMather.Button2Click(Sender: TObject);
+begin
+  IF NOT FrmMain.N5.Enabled THEN BEGIN
+ //   MessageDlg('您无此权限,请联系管理员!',mtError,[mbOK],0);
+    MessageBox(Handle, '您无此权限,请联系管理员!', '提示', MB_ICONERROR or MB_OK) ;
+    ABORT
+  END;
+  Button6.Enabled:=TRUE;
+ //(Sender as Tbutton).Enabled:=NOT (Sender as Tbutton).Enabled;
+ laction:='MODIFY';
+end;
+
+procedure TFrmMather.dxDBGrid1Exit(Sender: TObject);
+begin
+{  IF Button2.Caption='保存' THEN  BEGIN
+    MessageDlg('请先保存数据!',mtError,[mbOK],0);
+    dxDBGrid1.SetFocus;
+    Abort;
+  END;  }
+end;
+
+procedure TFrmMather.Button3Click(Sender: TObject);
+begin
+  IF NOT FrmMain.N20.Enabled THEN BEGIN
+ //   MessageDlg('您无此权限,请联系管理员!',mtError,[mbOK],0);
+    MessageBox(Handle, '您无此权限,请联系管理员!', '提示', MB_ICONERROR or MB_OK) ;
+    ABORT
+  END;
+  IF (dxDBGrid1.FocusedNode=nil) or (dxDBGrid1.SelectedCount=0) then abort;
+  if not (MessageBox(Handle, '您确定要删除这条数据吗?',
+      '提示', MB_ICONWARNING or MB_YESNOCANCEL) = ID_YES) then
+      Abort;   
+end;
+
+procedure TFrmMather.Button6Click(Sender: TObject);
+begin
+    dxDBGrid1.OptionsBehavior:=dxDBGrid1.OptionsBehavior-[edgoEditing];
+    (Sender as Tbutton).Enabled:=NOT (Sender as Tbutton).Enabled;
+    Button1.Enabled:=TRUE;
+    Button2.Enabled:=TRUE;
+end;
+
+procedure TFrmMather.Button4Click(Sender: TObject);
+begin
+close;
+end;
+
+procedure TFrmMather.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   Action:=cafree;
+end;
+function TFrmMather.savelog(logcntet,logvalue,logproname:string):boolean;
+var sqlstr:string;
+var tmpado:Tadoquery;
+begin
+   tmpado:=Tadoquery.Create(nil);
+   sqlstr:='insert into b_log(logno,logcntet,logvalue,logproname,logkeydate,loguser) values ('+
+                       getmax('b_log','logno')+','+
+                       #39+logcntet+#39+','+
+                       #39+logvalue+#39+','+
+                       #39+logproname+#39+','+
+                       #39+trim(g_date)+#39+','+
+                       #39+curuser.Name+#39+')';
+   adoqryexec(tmpado,sqlstr);
+end;
+procedure TFrmMather.FormShow(Sender: TObject);
+begin
+g_init;
+end;
+
+end.

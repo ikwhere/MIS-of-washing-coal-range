@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TfrxReport Name="" DotMatrixReport="False" EngineOptions.MaxMemSize="10000000" IniFile="\Software\Fast Reports" PreviewOptions.Buttons="2047" PreviewOptions.Zoom="1" PrintOptions.Printer="Default" ReportOptions.CreateDate="39851.7300934954" ReportOptions.Description.Text="" ReportOptions.LastChange="39851.7334861458" ScriptLanguage="PascalScript" ScriptText.Text="begin&#13;&#10;&#13;&#10;end." PropData="044C65667403300103546F7002400844617461736574730E00095661726961626C65730E00055374796C650E00">
+  <TfrxReportPage Name="Page1" Orientation="poLandscape" PaperWidth="420" PaperHeight="297" PaperSize="8" LeftMargin="10" RightMargin="10" TopMargin="10" BottomMargin="10" ColumnWidth="0" ColumnPositions.Text="" HGuides.Text="" VGuides.Text="">
+    <TfrxReportTitle Name="ReportTitle1" Height="136.06308" Left="0" Top="18.89765" Width="1511.812">
+      <TfrxMemoView Name="Memo1" Left="585.82715" Top="30.23624" Width="517.79561" Height="60.47248" GroupIndex="0" Font.Charset="1" Font.Color="0" Font.Height="-56" Font.Name="Arial" Font.Style="1" Memo.Text="原煤购进综合月报表" ParentFont="False"/>
+      <TfrxMemoView Name="Memo2" Left="404.40971" Top="30.23624" Width="181.41744" Height="57.69295" GroupIndex="0" Font.Charset="1" Font.Color="0" Font.Height="-56" Font.Name="Arial" Font.Style="1" Memo.Text="" ParentFont="False"/>
+    </TfrxReportTitle>
+    <TfrxMasterData Name="MasterData1" Height="427.08689" Left="0" Top="215.43321" Width="1511.812" ColumnWidth="0" ColumnGap="0" RowCount="0"/>
+  </TfrxReportPage>
+</TfrxReport>

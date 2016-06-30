@@ -1,0 +1,225 @@
+inherited FrmWroomdataAdd: TFrmWroomdataAdd
+  Left = 286
+  Top = 81
+  Caption = #21407#29028#30917#25151#25968#25454#32500#25252
+  ClientHeight = 301
+  ClientWidth = 515
+  OldCreateOrder = True
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited Labelno: TLabel
+    Left = 312
+    Top = 48
+  end
+  object Label1: TLabel [1]
+    Left = 24
+    Top = 43
+    Width = 65
+    Height = 17
+    AutoSize = False
+    Caption = #25215#36816#26085#26399':'
+  end
+  object Label2: TLabel [2]
+    Left = 72
+    Top = 88
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Label3: TLabel [3]
+    Left = 264
+    Top = 43
+    Width = 65
+    Height = 17
+    AutoSize = False
+    Caption = #20379#29028#29028#30719':'
+  end
+  object Label4: TLabel [4]
+    Left = 312
+    Top = 88
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Label5: TLabel [5]
+    Left = 24
+    Top = 83
+    Width = 65
+    Height = 17
+    AutoSize = False
+    Caption = #25215#36816#21333#20301':'
+  end
+  object Label6: TLabel [6]
+    Left = 56
+    Top = 208
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Label7: TLabel [7]
+    Left = 264
+    Top = 83
+    Width = 65
+    Height = 17
+    AutoSize = False
+    Caption = #25215#36816#36710#21495':'
+  end
+  object Label8: TLabel [8]
+    Left = 296
+    Top = 128
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Label9: TLabel [9]
+    Left = 24
+    Top = 123
+    Width = 57
+    Height = 17
+    AutoSize = False
+    Caption = #25215#36816#36710#37325':'
+  end
+  object Label10: TLabel [10]
+    Left = 64
+    Top = 168
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Label11: TLabel [11]
+    Left = 269
+    Top = 123
+    Width = 57
+    Height = 17
+    AutoSize = False
+    Caption = #27611'      '#37325':'
+  end
+  object Label13: TLabel [12]
+    Left = 24
+    Top = 163
+    Width = 49
+    Height = 17
+    AutoSize = False
+    Caption = #20928'      '#37325':'
+  end
+  object Label15: TLabel [13]
+    Left = 232
+    Top = 123
+    Width = 17
+    Height = 17
+    AutoSize = False
+    Caption = #21544
+  end
+  object Label16: TLabel [14]
+    Left = 472
+    Top = 123
+    Width = 33
+    Height = 17
+    AutoSize = False
+    Caption = #21544
+  end
+  object Label17: TLabel [15]
+    Left = 232
+    Top = 163
+    Width = 33
+    Height = 17
+    AutoSize = False
+    Caption = #21544
+  end
+  object Label12: TLabel [16]
+    Left = 8
+    Top = 136
+    Width = 3
+    Height = 13
+    Visible = False
+  end
+  object Edit4: TEdit [17]
+    Tag = 4
+    Left = 96
+    Top = 120
+    Width = 129
+    Height = 21
+    Hint = #29992#25143#21517':'
+    TabOrder = 4
+    OnKeyPress = Edit4KeyPress
+  end
+  object Edit5: TEdit [18]
+    Tag = 5
+    Left = 336
+    Top = 120
+    Width = 129
+    Height = 21
+    Hint = #29992#25143#21517':'
+    TabOrder = 6
+    OnChange = Edit5Change
+  end
+  object Edit6: TEdit [19]
+    Tag = 6
+    Left = 96
+    Top = 160
+    Width = 129
+    Height = 21
+    Hint = #29992#25143#21517':'
+    TabOrder = 5
+  end
+  object DatePicker1: TDateTimePicker [20]
+    Left = 96
+    Top = 40
+    Width = 137
+    Height = 21
+    CalAlignment = dtaLeft
+    Date = 39718.6263845486
+    Time = 39718.6263845486
+    DateFormat = dfShort
+    DateMode = dmComboBox
+    Kind = dtkDate
+    ParseInput = False
+    TabOrder = 0
+  end
+  object ComboCoal: TComboBox [21]
+    Tag = 1
+    Left = 336
+    Top = 40
+    Width = 137
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 1
+  end
+  object ComboTpunit: TComboBox [22]
+    Tag = 2
+    Left = 96
+    Top = 80
+    Width = 137
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 2
+    OnChange = ComboTpunitChange
+  end
+  object ComboTknumb: TComboBox [23]
+    Tag = 3
+    Left = 336
+    Top = 80
+    Width = 137
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 3
+    OnChange = ComboTknumbChange
+    OnSelect = ComboTknumbSelect
+  end
+  inherited Panel1: TPanel
+    Top = 235
+    Width = 515
+    TabOrder = 7
+    inherited BitBtn1: TBitBtn
+      Left = 192
+      OnClick = BitBtn1Click
+    end
+  end
+  inherited ADOQuery1: TADOQuery
+    Connection = nil
+  end
+  inherited ADOQtmp: TADOQuery
+    Connection = nil
+  end
+end

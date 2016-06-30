@@ -1,0 +1,105 @@
+unit sczmcl;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, MotherForm, dxExEdtr, DB, ADODB, dxCntner, dxTL, dxDBCtrl,
+  dxDBGrid, StdCtrls, ExtCtrls, ComCtrls;
+
+type
+  TFrmSczmcl = class(TFrmMather)
+    dxDBGrid1sczmno: TdxDBGridMaskColumn;
+    dxDBGrid1sczmdate: TdxDBGridMaskColumn;
+    dxDBGrid1sczmbc: TdxDBGridMaskColumn;
+    dxDBGrid1sczmcl: TdxDBGridMaskColumn;
+    dxDBGrid1sczmcs: TdxDBGridMaskColumn;
+    dxDBGrid1scgscl: TdxDBGridMaskColumn;
+    dxDBGrid1scgscs: TdxDBGridMaskColumn;
+    dxDBGrid1scnmcl: TdxDBGridMaskColumn;
+    dxDBGrid1scnmcs: TdxDBGridMaskColumn;
+    dxDBGrid1Column10: TdxDBGridMaskColumn;
+    dxDBGrid1Column11: TdxDBGridMaskColumn;
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    function l_init:boolean;
+  end;
+
+var
+  FrmSczmcl: TFrmSczmcl;
+
+implementation
+
+uses sczmcl_add;
+
+{$R *.dfm}
+function TFrmSczmcl.l_init:boolean;
+VAR sqlstr:string;
+begin
+  sqlstr:='select * from sczm';
+  adoqryopen(ADOQuery1,sqlstr);
+end;
+procedure TFrmSczmcl.Button1Click(Sender: TObject);
+begin
+  inherited;
+  FrmSczmclAdd:=TFrmSczmclAdd.Create(self);
+  FrmSczmclAdd.Labelno.Caption:=getmax('sczm','sczmno');
+//  FrmScjmAdd.AutoInCombobox(FrmScjmAdd.ComboCoal,'select coalname from b_coal');
+  FrmSczmclAdd.Combobc.ItemIndex:=0;
+  FrmSczmclAdd.DatePicker1.Date:=now();
+  FrmSczmclAdd.ShowModal;
+  l_init
+end;
+
+procedure TFrmSczmcl.Button3Click(Sender: TObject);
+begin
+  inherited;
+  WITH dxDBGrid1 DO
+  BEGIN
+    IF (FocusedNode <> nil) AND (SelectedCount = 1) AND
+       FocusedNode.HasChildren THEN Exit;
+    IF SelectedCount > 1 THEN begin
+        savelog('删除<'+ADOQuery1.fieldbyname('sczmdate').AsString+'>'+ADOQuery1.fieldbyname('sczmbc').AsString+
+        '中煤/泥煤/矸石生产记录',ADOQuery1.fieldbyname('sczmno').AsString,'中煤/矸石/泥煤产量录入');
+        DeleteSelection
+    end
+    ELSE
+      IF FocusedNode <> nil THEN BEGIN
+      savelog('删除'+ADOQuery1.fieldbyname('sczmdate').AsString+ADOQuery1.fieldbyname('sczmbc').AsString+
+        '中煤/泥煤/矸石生产记录',ADOQuery1.fieldbyname('sczmno').AsString,'中煤/矸石/泥煤产量录入');
+      TdxDBGridNode(FocusedNode).Delete;
+      END;
+  END;
+
+end;
+
+procedure TFrmSczmcl.Button2Click(Sender: TObject);
+begin
+  inherited;
+  FrmSczmclAdd:=TFrmSczmclAdd.Create(self);
+  FrmSczmclAdd.Labelno.Caption:=ADOQuery1.fieldbyname('sczmno').AsString;
+  FrmSczmclAdd.DatePicker1.Date:=ADOQuery1.fieldbyname('sczmdate').AsDateTime;
+  FrmSczmclAdd.Combobc.Text:=ADOQuery1.fieldbyname('sczmbc').AsString;
+  FrmSczmclAdd.Edtzmcl.Text:=ADOQuery1.fieldbyname('sczmcl').AsString;
+  FrmSczmclAdd.Edtzmcs.Text:=ADOQuery1.fieldbyname('sczmcs').AsString;
+  FrmSczmclAdd.Edtgscl.text:=ADOQuery1.fieldbyname('scgscl').AsString;
+  FrmSczmclAdd.Edtgscs.Text:=ADOQuery1.fieldbyname('scgscs').AsString;
+  FrmSczmclAdd.Edtnmcl.Text:=ADOQuery1.fieldbyname('scnmcl').AsString;
+  FrmSczmclAdd.Edtnmcs.Text:=ADOQuery1.fieldbyname('scnmcs').AsString;
+  FrmSczmclAdd.ShowModal;
+  l_init
+end;
+
+procedure TFrmSczmcl.FormShow(Sender: TObject);
+begin
+  inherited;
+  l_init
+end;
+
+end.

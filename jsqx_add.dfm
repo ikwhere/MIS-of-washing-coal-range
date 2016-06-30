@@ -1,0 +1,56 @@
+object Frmjsqx_add: TFrmjsqx_add
+  Left = 205
+  Top = 215
+  Width = 471
+  Height = 337
+  Caption = #26435#38480#26032#22686
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 16
+    Width = 65
+    Height = 17
+    AutoSize = False
+    Caption = #24403#21069#35282#33394':'
+  end
+  object Label2: TLabel
+    Left = 96
+    Top = 16
+    Width = 65
+    Height = 17
+    AutoSize = False
+  end
+  object Button1: TButton
+    Left = 144
+    Top = 240
+    Width = 73
+    Height = 33
+    Caption = #20445#23384
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 224
+    Top = 240
+    Width = 73
+    Height = 33
+    Caption = #21462#28040
+    TabOrder = 1
+  end
+  object CheckBox1: TCheckBox
+    Left = 32
+    Top = 48
+    Width = 113
+    Height = 33
+    Caption = 'CheckBox1'
+    TabOrder = 2
+  end
+end

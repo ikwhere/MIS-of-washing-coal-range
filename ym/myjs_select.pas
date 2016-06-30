@@ -1,0 +1,69 @@
+unit myjs_select;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, MotherForm, dxExEdtr, ADODB, DB, dxCntner, dxTL, dxDBCtrl,
+  dxDBGrid, StdCtrls, ExtCtrls, ComCtrls;
+
+type
+  TFRMMyjsSelect = class(TFrmMather)
+    Comboxkjqj: TComboBox;
+    Comboxdw: TComboBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure Button1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+     function l_init:boolean;
+  end;
+
+var
+  FRMMyjsSelect: TFRMMyjsSelect;
+
+implementation
+
+uses myjs_add;
+
+{$R *.dfm}
+function TFRMMyjsSelect.l_init:boolean;
+VAR sqlstr:string;
+begin
+    sqlstr:='select mtsysymjsfs from mtsys';
+    adoqryopen(ADOQuery1,sqlstr);
+    sqlstr:='select kjqj from kjqj  where clscunt=0 order by kjqj';
+    if ADOQuery1.Fields[0].AsString='‘¬µ•± Ω·À„' then
+     sqlstr:=sqlstr+'where kjqj not in (select ymjsmonth from ymjs where ymjssign=1)';
+     adoqryopen(ADOQuery1,sqlstr);
+     while not ADOQuery1.eof do begin
+       Comboxkjqj.Items.Add(ADOQuery1.fieldbyname('kjqj').asstring) ;
+       ADOQuery1.Next;
+     end;
+     sqlstr:='select coalname from b_coal ';
+     adoqryopen(ADOQuery1,sqlstr);
+     while not ADOQuery1.eof do begin
+       Comboxdw.Items.Add(ADOQuery1.fieldbyname('coalname').asstring) ;
+       ADOQuery1.Next;
+     end;
+end;
+procedure TFRMMyjsSelect.Button1Click(Sender: TObject);
+begin
+  inherited;
+  Frmmyjs_add:=TFrmmyjs_add.Create(self);
+  Frmmyjs_add.SMonth:=Comboxkjqj.text;
+  Frmmyjs_add.Scoal:=Comboxdw.text;
+  Frmmyjs_add.ShowModal;
+  self.Close;
+end;
+
+procedure TFRMMyjsSelect.FormShow(Sender: TObject);
+begin
+  inherited;
+  l_init
+end;
+
+end.

@@ -1,0 +1,87 @@
+unit jmsxdata_add;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, MotherForm_add, DB, ADODB, StdCtrls, Buttons, ExtCtrls, ComCtrls;
+
+type
+  TFrmjmsxdataAdd = class(TFrmAdd)
+    Label12: TLabel;
+    Label1: TLabel;
+    Edtph: TEdit;
+    Label2: TLabel;
+    Edttkno: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Edtwt: TEdit;
+    DatePicker1: TDateTimePicker;
+    ComboUser: TComboBox;
+    Label5: TLabel;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmjmsxdataAdd: TFrmjmsxdataAdd;
+  jmtpuser,jmxsdate,jmxswt:string;
+implementation
+
+uses jmsxdata,main;
+
+{$R *.dfm}
+
+procedure TFrmjmsxdataAdd.BitBtn1Click(Sender: TObject);
+var sqlstr:string;
+begin
+  inherited;
+  IF (CheckAllNull()=False) THEN begin
+    MessageBox(Handle, '资料未填写全,请检查!', '错误', MB_ICONERROR or MB_OK) ;
+    ABORT
+  END;
+
+  if Frmjmsxdata.laction='ADD' then begin
+            sqlstr:='insert into jmsxdata (jmxsno,jmxsdate,jmtpuser,jmxsph,jmxswt,jmtpnum,jmxskeydt,jmxsuser,jmxsname) values ('+
+                                  Labelno.Caption+','+
+                                  #39+datetostr(DatePicker1.Date)+#39+','+
+                                  #39+trim(ComboUser.Text)+#39+','+
+                                  #39+trim(Edtph.Text)+#39+','+
+                                  #39+trim(Edtwt.Text)+#39+','+
+                                  #39+trim(Edttkno.Text)+#39+','+
+                                  #39+datetostr(date())+#39+','+
+                                  #39+curuser.Name+#39+',''精煤'')';
+           savelog('增加<'+trim(ComboUser.Text)+'>客户'+datetostr(DatePicker1.Date)+
+           '精煤销售记录,销量'+trim(Edtwt.Text)+'吨',Labelno.Caption,'精煤销售数据录入');
+  end
+  else if  Frmjmsxdata.laction='MODIFY' then begin
+           sqlstr:='update jmsxdata set jmxsdate='+#39+datetostr(DatePicker1.Date)+#39+','+
+                                  'jmtpuser='+#39+trim(ComboUser.Text)+#39+','+
+                                  'jmxsph='+#39+trim(Edtph.Text)+#39+','+
+                                  'jmxswt='+#39+trim(Edtwt.Text)+#39+','+
+                                  'jmtpnum='+#39+trim(Edttkno.Text)+#39+ ','+
+                                  'jmxskeydt='+#39+datetostr(now)+#39+','+
+                                  'jmxsuser='+#39+curuser.Name+#39+
+                                  ' where jmxsno='+Labelno.Caption+' and jmxsname=''精煤''';
+            savelog('修改<'+jmtpuser+'>客户'+
+            jmxsdate+'精煤销售记录，销量'+jmxswt+'吨',Labelno.Caption,'精煤销售数据录入');
+  end;
+  adoqryexec(ADOQtmp,sqlstr);
+  self.Close;
+end;
+
+procedure TFrmjmsxdataAdd.FormShow(Sender: TObject);
+begin
+  inherited;
+  if  Frmjmsxdata.laction='MODIFY' then begin
+     jmtpuser:=trim(ComboUser.Text) ;
+     jmxsdate:=datetostr(DatePicker1.Date);
+     jmxswt:=trim(Edtwt.Text) ;
+  end;
+end;
+
+end.
